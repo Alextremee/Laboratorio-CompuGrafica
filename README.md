@@ -1,2 +1,2 @@
 # Laboratorio-CompuGrafica-Grupo1
-Laboratorio Computació Grafica-Alejandro Martínez Jiménez
+Laboratorio Computación Grafica-Alejandro Martínez Jiménez
