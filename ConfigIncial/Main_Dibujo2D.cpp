@@ -1,6 +1,6 @@
 //Alejandro Martínez Jiménez
-//Practica 1
-//18-Agosto-2025
+//Practica 2
+//21-Agosto-2025
 //319130865
 #include<iostream>
 
@@ -100,7 +100,7 @@ int main() {
 		//Tercer linea
 
 		//Cuarta linea
-		-0.5f,   0.32f, 0.0f,    0.5255f, 0.7882f, 0.4627f,  
+		-0.5f,   0.32f, 0.0f,    0.5255f, 1.0f, 0.4627f,  
 		-0.44f,  0.32f, 0.0f,    0.3569f, 0.70196f, 0.3176f,
 		-0.38,   0.32f, 0.0f,    0.5608f, 0.7961f, 0.4980f,
 		-0.32,   0.32f, 0.0f,    0.0196f, 0.0275f, 0.0314f,
@@ -144,6 +144,7 @@ int main() {
 		-0.20f,  0.14f, 0.0f,    0.0196f, 0.0275f, 0.0314f, 
 		-0.14f,  0.14f, 0.0f,    0.1804f, 0.5490f, 0.2627f,
 		-0.08f,  0.14f, 0.0f,    0.4235f, 0.7412f, 0.3451f, 
+		//septima linea
 
 
 		//Octava Linea
@@ -217,7 +218,7 @@ int main() {
 
 
 		glPointSize(18);
-		glDrawArrays(GL_POINTS, 0, 90);
+		glDrawArrays(GL_POINTS, 0, 64);
 
 		//glDrawArrays(GL_LINES,0,2);
 		//glDrawArrays(GL_LINE_LOOP, 0, 3);
