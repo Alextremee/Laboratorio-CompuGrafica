@@ -206,42 +206,55 @@ int main() {
 
 		glBindVertexArray(VAO);
 	
-		//MESA
+		//cuerpo cerdito
 	    model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(3.0f, 0.1f, 2.0f));
-		model = glm::translate(model, glm::vec3(0.0f, 0.6f, 0.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 1.3f, 1.4f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.46f, -1.22f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 	
+		//OREJA 1
+		model = glm::mat4(1.0f);
+		model = glm::scale(model, glm::vec3(0.18f, 0.32f, 0.38f));  //Tamaño pata
+		model = glm::translate(model, glm::vec3(-3.3f, 4.0f, -3.5f)); //Posición Pata
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		//OREJA 2
+		model = glm::mat4(1.0f); 
+		model = glm::scale(model, glm::vec3(0.18f, 0.32f, 0.38f));  //Tamaño pata 
+		model = glm::translate(model, glm::vec3(-3.3f, 4.0f, -5.5f)); //Posición Pata 
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model)); 
+		glDrawArrays(GL_TRIANGLES, 0, 36); 
+
 		//PATA 1
 		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.1f, 0.6f, 0.1f));  //Tamaño pata
-		model = glm::translate(model, glm::vec3(10.0f, -0.45f, 6.5f)); //Posición Pata
+		model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));  //Tamaño pata
+		model = glm::translate(model, glm::vec3(-5.0f, 0.49f, -6.5f)); //Posición Pata
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
+		////PATA 2
+		//model = glm::mat4(1.0f);
+		//model = glm::scale(model, glm::vec3(0.1f, 0.6f, 0.1f));  //Tamaño pata
+		//model = glm::translate(model, glm::vec3(10.0f, -0.45f, -6.5f)); //Posición Pata
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		//PATA 2
-		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.1f, 0.6f, 0.1f));  //Tamaño pata
-		model = glm::translate(model, glm::vec3(-10.0f, -0.45f, 6.5f)); //Posición Pata
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		////PATA 3
+		//model = glm::mat4(1.0f);
+		//model = glm::scale(model, glm::vec3(0.1f, 0.6f, 0.1f));  //Tamaño pata
+		//model = glm::translate(model, glm::vec3(10.0f, -0.45f, -6.5f)); //Posición Pata
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		//PATA 3
-		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.1f, 0.6f, 0.1f));  //Tamaño pata
-		model = glm::translate(model, glm::vec3(-10.0f, -0.45f, -6.5f)); //Posición Pata
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
-		//PATA 4
-		model = glm::mat4(1.0f);
-		model = glm::scale(model, glm::vec3(0.1f, 0.6f, 0.1f));  //Tamaño pata
-		model = glm::translate(model, glm::vec3(10.0f, -0.45f, -6.5f)); //Posición Pata
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		////PATA 4
+		//model = glm::mat4(1.0f);
+		//model = glm::scale(model, glm::vec3(0.1f, 0.6f, 0.1f));  //Tamaño pata
+		//model = glm::translate(model, glm::vec3(10.0f, -0.45f, -6.5f)); //Posición Pata
+		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//glDrawArrays(GL_TRIANGLES, 0, 36);
 
 
 
@@ -264,22 +277,22 @@ int main() {
  void Inputs(GLFWwindow *window) {
 	 if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)  //GLFW_RELEASE
 		 glfwSetWindowShouldClose(window, true);
-	 if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		 movX += 0.08f;
 	 if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		 movX -= 0.08f;
+		 movX += 0.12f;
+	 if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		 movX -= 0.12f;
 	 if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-		 movY += 0.08f;
+		 movY += 0.12f;
 	 if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
-		 movY -= 0.08f;
+		 movY -= 0.12f;
 	 if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		 movZ -= 0.08f;
+		 movZ -= 0.12f;
 	 if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		 movZ += 0.08f;
-	 if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-		 rot += 0.4f;
+		 movZ += 0.12f;
 	 if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-		 rot -= 0.4f;
+		 rot += 0.8f;
+	 if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		 rot -= 0.8f;
  }
 
 
