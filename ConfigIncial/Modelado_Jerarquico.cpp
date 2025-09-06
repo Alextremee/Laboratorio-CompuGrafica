@@ -1,3 +1,7 @@
+//Alejandro Martínez Jiménez
+//Previo 5
+//06-Septiembre-2025
+//319130865
 #include<iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
