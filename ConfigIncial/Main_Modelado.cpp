@@ -1,4 +1,4 @@
-// Alejandro Martínez Jiménez
+// Alejandro Martinez Jimenez
 // Practica 4 
 // 05-Septiembre-2025
 //31913085
