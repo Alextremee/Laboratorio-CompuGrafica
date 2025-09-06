@@ -1,10 +1,9 @@
 // Alejandro Martínez Jiménez
 // Practica 4 
 // 05-Septiembre-2025
-//319130865
+//31913085
 
 #include <iostream>
-
 //#define GLEW_STATIC
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
