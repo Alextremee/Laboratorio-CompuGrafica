@@ -1,6 +1,6 @@
-//Alejandro Martínez Jiménez
-//Previo 5
-//06-Septiembre-2025
+ï»¿//Alejandro MartÃ­nez JimÃ©nez
+//PRACTICA 5
+//12-Septiembre-2025
 //319130865
 #include<iostream>
 #include <GL/glew.h>
@@ -13,7 +13,7 @@
 // Shaders
 #include "Shader.h"
 
-void Inputs(GLFWwindow *window);
+void Inputs(GLFWwindow* window);
 
 
 const GLint WIDTH = 1200, HEIGHT = 800;
@@ -47,7 +47,7 @@ dedo5b = 0.0f;
 
 int main() {
 	glfwInit();
-	//Verificación de compatibilidad 
+	//Verificaciï¿½n de compatibilidad 
 	// Set all the required options for GLFW
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -56,13 +56,13 @@ int main() {
 
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
-	GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "PREVIO 5 Modelado jerarquico Martinez Jimenez Alejandro", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "PRACTICA 5 Modelado jerarquico Martinez Jimenez Alejandro", nullptr, nullptr);
 
 	int screenWidth, screenHeight;
 
 	glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
 
-	//Verificación de errores de creacion  ventana
+	//Verificaciï¿½n de errores de creacion  ventana
 	if (nullptr == window)
 	{
 		std::cout << "Failed to create GLFW window" << std::endl;
@@ -74,7 +74,7 @@ int main() {
 	glfwMakeContextCurrent(window);
 	glewExperimental = GL_TRUE;
 
-	//Verificación de errores de inicialización de glew
+	//Verificaciï¿½n de errores de inicializaciï¿½n de glew
 
 	if (GLEW_OK != glewInit()) {
 		std::cout << "Failed to initialise GLEW" << std::endl;
@@ -102,49 +102,49 @@ int main() {
 	// use with Orthographic Projection
 
 
-	
+
 
 	// use with Perspective Projection
 	float vertices[] = {
-		-0.5f, -0.5f, 0.5f, 
-		0.5f, -0.5f, 0.5f,  
-		0.5f,  0.5f, 0.5f,  
-		0.5f,  0.5f, 0.5f,  
-		-0.5f,  0.5f, 0.5f, 
-		-0.5f, -0.5f, 0.5f, 
-		
-	    -0.5f, -0.5f,-0.5f, 
-		 0.5f, -0.5f,-0.5f, 
-		 0.5f,  0.5f,-0.5f, 
-		 0.5f,  0.5f,-0.5f, 
-	    -0.5f,  0.5f,-0.5f, 
-	    -0.5f, -0.5f,-0.5f, 
-		
+		-0.5f, -0.5f, 0.5f,
+		0.5f, -0.5f, 0.5f,
+		0.5f,  0.5f, 0.5f,
+		0.5f,  0.5f, 0.5f,
+		-0.5f,  0.5f, 0.5f,
+		-0.5f, -0.5f, 0.5f,
+
+		-0.5f, -0.5f,-0.5f,
+		 0.5f, -0.5f,-0.5f,
+		 0.5f,  0.5f,-0.5f,
+		 0.5f,  0.5f,-0.5f,
+		-0.5f,  0.5f,-0.5f,
+		-0.5f, -0.5f,-0.5f,
+
 		 0.5f, -0.5f,  0.5f,
 		 0.5f, -0.5f, -0.5f,
 		 0.5f,  0.5f, -0.5f,
 		 0.5f,  0.5f, -0.5f,
 		 0.5f,  0.5f,  0.5f,
 		 0.5f,  -0.5f, 0.5f,
-      
+
 		-0.5f,  0.5f,  0.5f,
 		-0.5f,  0.5f, -0.5f,
 		-0.5f, -0.5f, -0.5f,
 		-0.5f, -0.5f, -0.5f,
 		-0.5f, -0.5f,  0.5f,
 		-0.5f,  0.5f,  0.5f,
-		
+
 		-0.5f, -0.5f, -0.5f,
-		0.5f, -0.5f, -0.5f, 
-		0.5f, -0.5f,  0.5f, 
-		0.5f, -0.5f,  0.5f, 
+		0.5f, -0.5f, -0.5f,
+		0.5f, -0.5f,  0.5f,
+		0.5f, -0.5f,  0.5f,
 		-0.5f, -0.5f,  0.5f,
 		-0.5f, -0.5f, -0.5f,
-		
+
 		-0.5f,  0.5f, -0.5f,
-		0.5f,  0.5f, -0.5f, 
-		0.5f,  0.5f,  0.5f, 
-		0.5f,  0.5f,  0.5f, 
+		0.5f,  0.5f, -0.5f,
+		0.5f,  0.5f,  0.5f,
+		0.5f,  0.5f,  0.5f,
 		-0.5f,  0.5f,  0.5f,
 		-0.5f,  0.5f, -0.5f,
 	};
@@ -163,27 +163,27 @@ int main() {
 	//2.- Copiamos nuestros arreglo de vertices en un buffer de vertices para que OpenGL lo use
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	
+
 
 	//Posicion
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3* sizeof(GLfloat), (GLvoid *)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 	glEnableVertexAttribArray(0);
 
-	
+
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
 	glBindVertexArray(0); // Unbind VAO (it's always a good thing to unbind any buffer/array to prevent strange bugs)
 
-	
-	glm::mat4 projection=glm::mat4(1);
+
+	glm::mat4 projection = glm::mat4(1);
 
 	projection = glm::perspective(glm::radians(45.0f), (GLfloat)screenWidth / (GLfloat)screenHeight, 0.1f, 100.0f);//FOV, Radio de aspecto,znear,zfar
-	glm::vec3 color= glm::vec3(0.0f, 0.0f, 1.0f);
+	glm::vec3 color = glm::vec3(0.0f, 0.0f, 1.0f);
 	while (!glfwWindowShouldClose(window))
 	{
-		
+
 		Inputs(window);
 		// Check if any events have been activiated (key pressed, mouse moved etc.) and call corresponding response functions
 		glfwPollEvents();
@@ -191,23 +191,22 @@ int main() {
 		// Render
 		// Clear the colorbuffer
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT| GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-		
+
 		ourShader.Use();
-		glm::mat4 model=glm::mat4(1);
-		glm::mat4 view=glm::mat4(1);
+		glm::mat4 model = glm::mat4(1);
+		glm::mat4 view = glm::mat4(1);
 		glm::mat4 modelTemp = glm::mat4(1.0f); //Temp
 		glm::mat4 modelTemp2 = glm::mat4(1.0f); //Temp
-		glm::mat4 modelTemp3 = glm::mat4(1.0f); //Temp 
 
 
 
 		//View set up 
-		view = glm::translate(view, glm::vec3(movX,movY, movZ));
+		view = glm::translate(view, glm::vec3(movX, movY, movZ));
 		view = glm::rotate(view, glm::radians(rot), glm::vec3(0.0f, 1.0f, 0.0f));
-		
+
 		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
 		GLint viewLoc = glGetUniformLocation(ourShader.Program, "view");
 		GLint projecLoc = glGetUniformLocation(ourShader.Program, "projection");
@@ -217,10 +216,10 @@ int main() {
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-	
+
 
 		glBindVertexArray(VAO);
-		
+
 		//Model Bicep 
 		model = glm::rotate(model, glm::radians(hombro), glm::vec3(0.0f, 0.0, 1.0f)); //hombro
 		modelTemp = model = glm::translate(model, glm::vec3(1.5f, 0.0f, 0.0f));
@@ -256,7 +255,7 @@ int main() {
 		model = glm::translate(modelTemp, glm::vec3(0.25f, 0.35f, 0.375f));
 		model = glm::rotate(model, glm::radians(dedo1a), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.25f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.12f));
 		color = glm::vec3(0.0f, 1.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -266,7 +265,7 @@ int main() {
 		model = glm::translate(modelTemp, glm::vec3(0.5f, 0.0f, 0.0));
 		model = glm::rotate(model, glm::radians(dedo1b), glm::vec3(0.0f, 0.0f, 1.0f));
 		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.25f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.12f));
 		color = glm::vec3(1.0f, 0.0f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -274,52 +273,91 @@ int main() {
 
 		//Model dedo2A
 		model = glm::translate(modelTemp2, glm::vec3(0.25f, 0.35f, 0.08f));
-		model = glm::rotate(model, glm::radians(dedo2a), glm::vec3(0.0f, 0.0f, 1.0f));  
-		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));   
-		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.25f));  
-		color = glm::vec3(0.343f, 0.25f, 1.0f);  
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));  
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));  
+		model = glm::rotate(model, glm::radians(dedo2a), glm::vec3(0.0f, 0.0f, 1.0f));
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.12f));
+		color = glm::vec3(0.343f, 0.25f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);//D  
 
 		//Model dedo2B
 		model = glm::translate(modelTemp, glm::vec3(0.5f, 0.0f, 0.0f));
-		model = glm::rotate(model, glm::radians(dedo2b), glm::vec3(0.0f, 0.0f, 1.0f)); 
-		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); 
-		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.25f)); 
-		color = glm::vec3(1.0f, 0.75f,0.032f); 
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color)); 
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model)) ;
+		model = glm::rotate(model, glm::radians(dedo2b), glm::vec3(0.0f, 0.0f, 1.0f));
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.12f));
+		color = glm::vec3(1.0f, 0.75f, 0.032f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);//E 
 
 		//Model dedo3A
-		model = glm::translate(modelTemp2, glm::vec3(0.25f, 0.35f, -0.28f)); 
-		model = glm::rotate(model, glm::radians(dedo3a), glm::vec3(0.0f, 0.0f, 1.0f)); 
-		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); 
-		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.25f)); 
+		model = glm::translate(modelTemp2, glm::vec3(0.25f, 0.35f, -0.18f));
+		model = glm::rotate(model, glm::radians(dedo3a), glm::vec3(0.0f, 0.0f, 1.0f));
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.12f));
 		color = glm::vec3(0.343f, 0.25f, 1.0f);
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glDrawArrays(GL_TRIANGLES, 0, 36);//D   
 
 		//Model dedo3B
-		model = glm::translate(modelTemp, glm::vec3(0.5f, 0.0f, 0.0f)); 
-		model = glm::rotate(model, glm::radians(dedo3b), glm::vec3(0.0f, 0.0f, 1.0f)); 
-		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f)); 
-		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.25f)); 
-		color = glm::vec3(0.343f, 0.25f, 1.0f); 
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color)); 
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model)); 
-		glDrawArrays(GL_TRIANGLES, 0, 36);//D  
+		model = glm::translate(modelTemp, glm::vec3(0.5f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(dedo3b), glm::vec3(0.0f, 0.0f, 1.0f));
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.12f));
+		color = glm::vec3(0.343f, 0.25f, 0.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//D
 
+		//Model dedo4A
+		model = glm::translate(modelTemp2, glm::vec3(0.25f, 0.35f, -0.42f));
+		model = glm::rotate(model, glm::radians(dedo4a), glm::vec3(0.0f, 0.0f, 1.0f));
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.12f));
+		color = glm::vec3(1.0f, 0.0f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//D
+
+		//Model dedo4B
+		model = glm::translate(modelTemp, glm::vec3(0.5f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(dedo4b), glm::vec3(0.0f, 0.0f, 1.0f));
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 0.3f, 0.12f));
+		color = glm::vec3(0.343f, 1.0f, 0.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//D
+
+		//Model dedo5A
+		model = glm::translate(modelTemp2, glm::vec3(0.0f, -0.30f, -0.42f));
+		model = glm::rotate(model, glm::radians(dedo4a), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.75f, 0.3f, 0.12f));
+		color = glm::vec3(0.343f, 0.25f, 1.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//D
+
+		//Model dedo5B
+		model = glm::translate(modelTemp, glm::vec3(0.25f, 0.0f, 0.0f));
+		model = glm::rotate(model, glm::radians(dedo4b), glm::vec3(0.0f, 1.0f, 0.0f));
+		modelTemp = model = glm::translate(model, glm::vec3(0.5f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.75f, 0.3f, 0.12f));
+		color = glm::vec3(1.0f, 0.25f, 0.0f);
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glDrawArrays(GL_TRIANGLES, 0, 36);//D
 
 
 		glBindVertexArray(0);
 
-		
+
 		// Swap the screen buffers
 		glfwSwapBuffers(window);
-	
+
 	}
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
@@ -327,62 +365,81 @@ int main() {
 
 	glfwTerminate();
 	return EXIT_SUCCESS;
- }
+}
 
- void Inputs(GLFWwindow *window) {
-	 if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)  //GLFW_RELEASE
-		 glfwSetWindowShouldClose(window, true);
-	 if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-		 movX += 0.08f;
-	 if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-		 movX -= 0.08f;
-	 if (glfwGetKey(window,GLFW_KEY_UP) == GLFW_PRESS)
-		 movY += 0.08f;
-	 if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-		 movY -= 0.08f;
-	 if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-		 movZ -= 0.08f;
-	 if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-		 movZ += 0.08f;
-	 if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-		 rot += 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
-		 rot -= 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
-		 hombro += 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
-		 hombro -= 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
-		 codo += 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
-		 codo -= 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
-		 muneca += 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-		 muneca -= 0.18f;
+void Inputs(GLFWwindow* window) {
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)  //GLFW_RELEASE
+		glfwSetWindowShouldClose(window, true);
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+		movX += 0.08f;
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+		movX -= 0.08f;
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+		movY += 0.08f;
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+		movY -= 0.08f;
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+		movZ -= 0.08f;
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+		movZ += 0.08f;
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+		rot += 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+		rot -= 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_R) == GLFW_PRESS)
+		hombro += 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+		hombro -= 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
+		codo += 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
+		codo -= 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
+		muneca += 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
+		muneca -= 0.18f;
 
-	 if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
-		 dedo1a += 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
-		 dedo1a -= 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
+		dedo1a += 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+		dedo1a -= 0.18f;
 
-	 if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
-		 dedo1b += 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
-		 dedo1b -= 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
+		dedo1b += 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
+		dedo1b -= 0.18f;
 
-	 if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
-		 dedo2a += 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
-		 dedo2a -= 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
+		dedo2a += 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+		dedo2a -= 0.18f;
 
-	 if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
-		 dedo2b += 0.18f;
-	 if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
-		 dedo2b -= 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
+		dedo2b += 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
+		dedo2b -= 0.18f;
+
+	if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
+		dedo3a += 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+		dedo3a -= 0.18f;
+
+	if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
+		dedo3b += 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
+		dedo3b -= 0.18f;
+
+	if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
+		dedo4a += 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+		dedo4a -= 0.18f;
+
+	if (glfwGetKey(window, GLFW_KEY_I) == GLFW_PRESS)
+		dedo4b += 0.18f;
+	if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
+		dedo4b -= 0.18f;
 
 
 
- }
-
+}
 
