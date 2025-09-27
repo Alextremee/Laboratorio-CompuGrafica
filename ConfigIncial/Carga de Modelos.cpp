@@ -1,6 +1,6 @@
 //Alejandro Martinez Jimenez
-//Previo 6 
-//20-Septiembre-2025
+//PRACTICA 6 
+//26-Septiembre-2025
 //31913085
 
 
@@ -103,8 +103,16 @@ int main()
     Model dog((char*)"Models/RedDog.obj");
     glm::mat4 projection = glm::perspective(camera.GetZoom(), (float)SCREEN_WIDTH / (float)SCREEN_HEIGHT, 0.1f, 100.0f);
 
-    Model plant((char*)"Models/Wood_Table.obj");
+    Model table((char*)"Models/old_stool.obj");
 
+    Model sofa((char*)"Models/ModernSofa.obj");
+
+
+    Model mesa((char*)"Models/oak_sideboard.obj");
+
+    Model maceta((char*)"Models/Ceramic_pot_model.obj");
+
+    Model macetados((char*)"Models/Indoor_plant_.obj");
 
 
 
@@ -135,12 +143,43 @@ int main()
         glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         dog.Draw(shader);
 
+    
 
-        model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(2.0f, 0.0f, 0.0f)); // ejemplo: a la izquierda
-        model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));     // ejemplo: más pequeño
-        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
-        plant.Draw(shader);
+        // --- table ---
+        glm::mat4 modeltable = glm::mat4(1.0f);
+        modeltable =glm::translate(modeltable, glm::vec3(1.0f, 0.0f, 1.0f)); // posición
+        modeltable = glm::scale(modeltable, glm::vec3(0.01f, 0.01f, 0.01f));     // tamaño
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modeltable));
+        table.Draw(shader);
+
+        // --- Sofa ---
+        glm::mat4 modelsofa = glm::mat4(1.0f);
+        modelsofa = glm::translate(modelsofa, glm::vec3(0.5f, 0.0f, -3.0)); // mover árbol a la derecha
+        modelsofa = glm::scale(modelsofa, glm::vec3(1.5f, 1.5f, 1.5f));      // hacerlo más pequeño
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelsofa));
+        sofa.Draw(shader);
+
+        // --- mesa tv ---
+        glm::mat4 modeltv = glm::mat4(1.0f);
+        modeltv = glm::translate(modeltv, glm::vec3(0.0f, 0.0f, 4.0f));
+        modeltv = glm::scale(modeltv, glm::vec3(1.6f, 1.6f, 1.6f));
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modeltv));
+        mesa.Draw(shader);
+
+        // --- maceta ---
+        glm::mat4 modelmaceta = glm::mat4(1.0f);
+        modelmaceta = glm::translate(modelmaceta, glm::vec3(-2.0f, 0.0f, 2.6f)); // posición
+        modelmaceta = glm::scale(modelmaceta, glm::vec3(4.0f, 4.0f, 4.0f));     // tamaño
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelmaceta));
+        maceta.Draw(shader);
+
+        // --- maceta2 ---
+        glm::mat4 modelmacetados = glm::mat4(1.0f);
+        modelmacetados = glm::translate(modelmacetados, glm::vec3(4.0f, 0.0f, -4.0f)); // mover árbol a la derecha
+        modelmacetados = glm::scale(modelmacetados, glm::vec3(0.5f, 0.5f, 0.5f));      // hacerlo más pequeño
+        glUniformMatrix4fv(glGetUniformLocation(shader.Program, "model"), 1, GL_FALSE, glm::value_ptr(modelmacetados));
+        macetados.Draw(shader);
+
 
 
         // Swap the buffers
