@@ -1,6 +1,6 @@
 //Alejandro Martínez Jiménez
 //PRACTICA 7
-//12-Octubre-2025
+//10-Octubre-2025
 //319130865
 #include <iostream>
 #include <cmath>
@@ -101,23 +101,59 @@ int main()
 	Shader lampShader("Shader/lamp.vs", "Shader/lamp.frag");
 
 	// Set up vertex data (and buffer(s)) and attribute pointers
+// Set up vertex data (and buffer(s)) and attribute pointers
 	GLfloat vertices[] =
 	{
-		// Positions            // Colors              // Texture Coords
-		-0.5f, -0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.5f,0.0f,
-		0.5f, -0.5f, 0.0f,	   1.0f, 1.0f,1.0f,		1.0f,0.0f,
-		0.5f,  0.5f, 0.0f,     1.0f, 1.0f,1.0f,	    1.0f,1.0f,
-		-0.5f,  0.5f, 0.0f,    1.0f, 1.0f,1.0f,		0.0f,1.0f,
+		// Posiciones            // Colores (blanco)   // Coordenadas UV (extraídas de Blender)
+			// Cara SMP
+			0.5f, -0.5f, -0.5f,    1.0f, 1.0f, 1.0f,    0.363922f, 0.515758f,
+			0.5f, -0.5f,  0.5f,    1.0f, 1.0f, 1.0f,    0.363383f, 0.726287f,
+			0.5f,  0.5f,  0.5f,    1.0f, 1.0f, 1.0f,    0.640926f, 0.727314f,
+			0.5f,  0.5f, -0.5f,    1.0f, 1.0f, 1.0f,    0.644256f, 0.517087f,
 
-		
+		   // Cara 2
+			-0.5f, -0.5f, -0.5f,     1.0f, 1.0f, 1.0f,    0.361002f, 0.733862f,
+			0.5f, -0.5f, -0.5f,     1.0f, 1.0f, 1.0f,    0.635045f, 0.733862f,
+			0.5f,  0.5f, -0.5f,     1.0f, 1.0f, 1.0f,    0.637021f, 0.938913f,
+			-0.5f,  0.5f, -0.5f,     1.0f, 1.0f, 1.0f,    0.362979f, 0.935858f,
+
+		   //Cara 3
+		  -0.5f,  0.5f,  0.5f,     1.0f, 1.0f, 1.0f,    0.640236f, 0.510418f,
+		  -0.5f,  0.5f, -0.5f,     1.0f, 1.0f, 1.0f,    0.361569f, 0.510303f,
+		  -0.5f, -0.5f, -0.5f,     1.0f, 1.0f, 1.0f,    0.363967f, 0.296272f,
+		  -0.5f, -0.5f,  0.5f,     1.0f, 1.0f, 1.0f,    0.642950f, 0.297799f,
+
+		  // Cara 4
+		   -0.5f, -0.5f, -0.5f,     1.0f, 1.0f, 1.0f,    0.913725f, 0.509091f,
+			0.5f, -0.5f, -0.5f,     1.0f, 1.0f, 1.0f,    0.653520f, 0.511727f,
+			0.5f, -0.5f,  0.5f,     1.0f, 1.0f, 1.0f,    0.650407f, 0.294545f,
+		   -0.5f, -0.5f,  0.5f,     1.0f, 1.0f, 1.0f,    0.912157f, 0.295758f,
+
+		   // Cara 5
+			0.5f, -0.5f,  0.5f,     1.0f, 1.0f, 1.0f,    0.352941f, 0.510303f,
+		   -0.5f, -0.5f,  0.5f,     1.0f, 1.0f, 1.0f,    0.085490f, 0.509697f,
+		   -0.5f,  0.5f,  0.5f,     1.0f, 1.0f, 1.0f,    0.085490f, 0.295152f,
+			0.5f,  0.5f,  0.5f,     1.0f, 1.0f, 1.0f,    0.356078f, 0.296970f,
+
+
+			//// Cara 6
+			 0.5f,  0.5f, -0.5f,     1.0f, 1.0f, 1.0f,    0.640853f, 0.079370f,
+			-0.5f,  0.5f, -0.5f,     1.0f, 1.0f, 1.0f,    0.640231f, 0.287154f,
+			-0.5f,  0.5f,  0.5f,     1.0f, 1.0f, 1.0f,    0.363546f, 0.286192f,
+			 0.5f,  0.5f,  0.5f,     1.0f, 1.0f, 1.0f,    0.362301f, 0.080813f,
 	};
+
 
 	GLuint indices[] =
-	{  // Note that we start from 0!
-		0,1,3,
-		1,2,3
-	
+	{
+		0, 1, 2,  2, 3, 0,
+		4, 5, 6,  6, 7, 4,
+		8, 9,10, 10,11, 8,
+	   12,13,14, 14,15,12,
+	   16,17,18, 18,19,16,
+	   20,21,22, 22,23,20
 	};
+
 
 	// First, set the container's VAO (and VBO)
 	GLuint VBO, VAO,EBO;
@@ -216,7 +252,7 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		// Draw the light object (using light's vertex attributes)
 		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
 
 		// Swap the screen buffers
@@ -278,7 +314,8 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 	}
 }
 
-void MouseCallback(GLFWwindow *window, double xPos, double yPos)
+void MouseCallback(GLFWwindow *window, double xPos,
+	double yPos)
 {
 	if (firstMouse)
 	{
