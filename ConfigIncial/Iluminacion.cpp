@@ -1,8 +1,9 @@
 //Alejandro Martínez Jiménez
-//PREVIO 8
-//12-Octubre-2025
+//practica 8
+//17-Octubre-2025
 //319130865
-// 
+// AGREGAR UNA LUZ MÁS Y QUE SIMULE DIA Y NOCHE, ADEMÁS DE HACER UN MOVIMIENTO CIRCULAR EN LUGAR DE UN MOVIMIENTO RECTO, CARGAR LOS MODELOS ANTERIORE
+//
 // Std. Includes
 #include <string>
 
@@ -62,7 +63,7 @@ int main()
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
     // Create a GLFWwindow object that we can use for GLFW's functions
-    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Materiales e Iluminacion Previo 8         Alejandro Martinez Jimenez", nullptr, nullptr);
+    GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Materiales e Iluminacion Practica 8         Alejandro Martinez Jimenez", nullptr, nullptr);
 
     if (nullptr == window)
     {
