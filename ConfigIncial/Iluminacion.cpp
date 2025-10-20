@@ -225,7 +225,7 @@ int main()
         glClearColor(currentSkyColor.r, currentSkyColor.g, currentSkyColor.b, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // Limpiar con el nuevo color
 
-        // 2b. Propiedades de las luces (intensidad basada en el ciclo)
+        // 2b. Propiedades de las luces (intensidad basada en el ciclo) 
         glm::vec3 sunAmbient, sunDiffuse, sunSpecular;
         glm::vec3 moonAmbient, moonDiffuse, moonSpecular;
 
@@ -338,17 +338,14 @@ int main()
         glfwSwapBuffers(window);
     }
 
-    // --- ¡¡AGREGA ESTAS LÍNEAS AQUÍ!! ---
     glDeleteVertexArrays(1, &VAO);
     glDeleteBuffers(1, &VBO);
 
     glfwTerminate();
     return 0;
-} // <--- ¡¡ESTA ES LA LLAVE QUE CIERRA 'main'!!
+} 
 
-// --- AHORA SÍ PUEDE EMPEZAR DoMovement ---
 // Moves/alters the camera positions based on user input
-
 void DoMovement()
 {
     // Camera controls
