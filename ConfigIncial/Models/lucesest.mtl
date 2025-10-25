@@ -1,0 +1,13 @@
+# Blender 4.5.3 LTS MTL File: 'quit.blend'
+# www.blender.org
+
+newmtl Handvat.001
+Ns 609.144409
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.606383 0.606383 0.606383
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd washingtonia filifera- bark- diffuse.jpg
