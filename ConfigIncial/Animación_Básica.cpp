@@ -111,6 +111,10 @@ bool AnimBall = false;
 float posYBall = 0.0f;
 
 
+float radius = 2.0f; // Radio de la circunferencia del movimiento horizontal
+float centerX = 0.0f; // Centro X de la circunferencia
+float centerZ = 0.0f; // Centro Z de la circunferencia
+
 // Deltatime
 GLfloat deltaTime = 0.0f;	// Time between current frame and last frame
 GLfloat lastFrame = 0.0f;  	// Time of last frame
@@ -301,8 +305,7 @@ int main()
 		glEnable(GL_BLEND); // Activa canal alfa
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 1);
-		// La traslación usa la altura calculada en Animation()
-		model = glm::translate(model, glm::vec3(0.0f, posYBall, 0.0f));
+		model = glm::translate(model, glm::vec3(5.0f, 0.0, 0.0f));
 		// Aplicar Rotación
 		model = glm::rotate(model, glm::radians(rotBall), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
@@ -456,14 +459,18 @@ void Animation() {
 	if (AnimBall)
 	{
 
-		float timeValue = glfwGetTime();
-		posYBall = abs(sin(timeValue * 2.0f)) * 2.0f;
+		rotBall += 150.0f * deltaTime;
+		if (rotBall > 360.0f) {
+			rotBall -= 360.0f;
+		}
+
+
+
 	}
 	else
 	{
-		// Si no hay animación, se queda en la base (Y=0.0)
+
 		rotBall = 0.0f;
-		posYBall = 0.0f;
 	}
 }
 
