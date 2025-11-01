@@ -1,5 +1,5 @@
-//Alejandro Martinez Jimenez
-//Previo 10 
+﻿//Alejandro Martinez Jimenez
+//Practica 10 
 //26-octubre-2025
 //31913085
 
@@ -131,7 +131,7 @@ int main()
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Animacion basica    previo 10        Alejandro Martinez Jimenez", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Animacion basica    Practica 10        Alejandro Martinez Jimenez", nullptr, nullptr);
 
 	if (nullptr == window)
 	{
@@ -296,17 +296,64 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Piso.Draw(lightingShader);
 
+
+
+
+
+
 		model = glm::mat4(1);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 0);
+
+		float theta = -glm::radians(rotBall);
+
+		float xDogPos = radius * cos(theta);
+		float zDogPos = radius * sin(theta);
+		float baseYD = 0.0f;
+
+
+		float jumpAmplitude = 0.25f;    // altura máxima del salto
+		float jumpSpeed = 3.5f;
+		float phase = fmod(rotBall, 360.0f); // ángulo actual 0–360°
+		float yDogPos = baseYD;
+
+		if (phase > 350.0f && phase < 360.0f) {
+			// salto rápido tipo parabólico (sube y baja en <1 seg)
+			float localT = (phase - 10.0f) / 1.0f; // 0 → 1 dentro del salto
+			yDogPos = baseYD + jumpAmplitude * sin(localT * glm::pi<float>());
+		}
+
+
+		glm::vec3 tangent(-sin(theta), 0.0f, cos(theta));
+
+		float heading = atan2(tangent.x, tangent.z);
+		const float DOG_FORWARD_OFFSET = glm::radians(180.0f);
+
+		model = glm::translate(model, glm::vec3(xDogPos, yDogPos, zDogPos));
+		model = glm::rotate(model, heading + DOG_FORWARD_OFFSET, glm::vec3(0.0f, 1.0f, 0.0f));
+
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Dog.Draw(lightingShader);
+
+
+
 
 		model = glm::mat4(1);
 		glEnable(GL_BLEND); // Activa canal alfa
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 1);
-		model = glm::translate(model, glm::vec3(5.0f, 0.0, 0.0f));
-		// Aplicar Rotaci�n
+		float angleRad = glm::radians(rotBall);
+		float radius = 2.0f; // Radio del giro (ajusta este valor)
+		float baseY = 0.4f; // Altura base del giro (ajusta este valor)
+		float amplitudeY = 0.5f; // Amplitud del "salto" (ajusta este valor)
+
+		// 2. Cálculo de la posición X, Y, Z
+		float xPos = radius * cos(angleRad); // Posición X
+		float zPos = radius * sin(angleRad); // Posición Z (movimiento circular)
+		float frequency = 0.5f; // Dos saltos por vuelta
+		float yPos = baseY + sin(angleRad * frequency) * amplitudeY; // Posición Y (salto)
+		model = glm::translate(model, glm::vec3(xPos, yPos, zPos));
+
+		// Aplicar Rotación
 		model = glm::rotate(model, glm::radians(rotBall), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Ball.Draw(lightingShader);
