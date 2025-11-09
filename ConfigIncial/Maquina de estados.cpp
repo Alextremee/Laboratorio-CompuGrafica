@@ -1,7 +1,7 @@
-﻿//Alejandro Martinez Jimenez
-//Practica 10 
-//31-octubre-2025
-//31913085
+﻿//Alejandro Martínez Jiménez
+//Practica 11
+//07-Noviembre-2025
+//319130865
 
 #include <iostream>
 #include <cmath>
@@ -105,15 +105,21 @@ float vertices[] = {
 
 glm::vec3 Light1 = glm::vec3(0);
 //Anim
-float rotBall = 0;
+float rotBall = 0.0f;
 bool AnimBall = false;
+bool AnimDog = false;
+float rotDog = 0.0f;
+int dogAnim = 0;
+float FLegs = 0.0f;
+float RLegs = 0.0f;
+float head = 0.0f;
+float tail = 0.0f;
+glm::vec3 dogPos (0.0f,0.0f,0.0f);
+float dogRot = 0.0f;
+float targetRot = 0.0f;
+bool step = false;
 
-float posYBall = 0.0f;
 
-
-float radius = 2.0f; // Radio de la circunferencia del movimiento horizontal
-float centerX = 0.0f; // Centro X de la circunferencia
-float centerZ = 0.0f; // Centro Z de la circunferencia
 
 // Deltatime
 GLfloat deltaTime = 0.0f;	// Time between current frame and last frame
@@ -131,7 +137,7 @@ int main()
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Animacion basica    Practica 10        Alejandro Martinez Jimenez", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Animacion maquina de estados                        Alejandro Martinez Jimenez", nullptr, nullptr);
 
 	if (nullptr == window)
 	{
@@ -170,7 +176,13 @@ int main()
 	Shader lampShader("Shader/lamp.vs", "Shader/lamp.frag");
 	
 	//models
-	Model Dog((char*)"Models/RedDog.obj");
+	Model DogBody((char*)"Models/DogBody.obj");
+	Model HeadDog((char*)"Models/HeadDog.obj");
+	Model DogTail((char*)"Models/TailDog.obj");
+	Model F_RightLeg((char*)"Models/F_RightLegDog.obj");
+	Model F_LeftLeg((char*)"Models/F_LeftLegDog.obj");
+	Model B_RightLeg((char*)"Models/B_RightLegDog.obj");
+	Model B_LeftLeg((char*)"Models/B_LeftLegDog.obj");
 	Model Piso((char*)"Models/piso.obj");
 	Model Ball((char*)"Models/ball.obj");
 
@@ -219,7 +231,7 @@ int main()
 		glEnable(GL_DEPTH_TEST);
 
 		
-		
+		glm::mat4 modelTemp = glm::mat4(1.0f); //Temp
 		
 	
 
@@ -296,68 +308,61 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		Piso.Draw(lightingShader);
 
-
-
-
-
-
 		model = glm::mat4(1);
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 0);
-
-		float theta = -glm::radians(rotBall);
-
-		float xDogPos = radius * cos(theta);
-		float zDogPos = radius * sin(theta);
-		float baseYD = 0.0f;
-
-
-		float jumpAmplitude = 0.25f;    // altura máxima del salto
-		float jumpSpeed = 3.5f;
-		float phase = fmod(rotBall, 360.0f); // ángulo actual 0–360°
-		float yDogPos = baseYD;
-
-		if (phase > 350.0f && phase < 360.0f) {
-			// salto rápido tipo parabólico (sube y baja en <1 seg)
-			float localT = (phase - 10.0f) / 1.0f; // 0 → 1 dentro del salto
-			yDogPos = baseYD + jumpAmplitude * sin(localT * glm::pi<float>());
-		}
-
-
-		glm::vec3 tangent(-sin(theta), 0.0f, cos(theta));
-
-		float heading = atan2(tangent.x, tangent.z);
-		const float DOG_FORWARD_OFFSET = glm::radians(180.0f);
-
-		model = glm::translate(model, glm::vec3(xDogPos, yDogPos, zDogPos));
-		model = glm::rotate(model, heading + DOG_FORWARD_OFFSET, glm::vec3(0.0f, 1.0f, 0.0f));
-
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Dog.Draw(lightingShader);
-
-
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 0);
+		//Body
+		modelTemp= model = glm::translate(model, dogPos);
+		modelTemp= model = glm::rotate(model, glm::radians(dogRot), glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		DogBody.Draw(lightingShader);
+		//Head
+		model = modelTemp;
+		model = glm::translate(model, glm::vec3(0.0f, 0.093f, 0.208f));
+		model = glm::rotate(model, glm::radians(head), glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		HeadDog.Draw(lightingShader);
+		//Tail 
+		model = modelTemp;
+		model = glm::translate(model, glm::vec3(0.0f, 0.026f, -0.288f));
+		model = glm::rotate(model, glm::radians(tail), glm::vec3(0.0f, 0.0f, -1.0f)); 
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model)); 
+		DogTail.Draw(lightingShader);
+		//Front Left Leg
+		model = modelTemp;
+		model = glm::translate(model, glm::vec3(0.112f, -0.044f, 0.074f));
+		model = glm::rotate(model, glm::radians(FLegs), glm::vec3(-1.0f, 0.0f, 0.0f)); 
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		F_LeftLeg.Draw(lightingShader);
+		//Front Right Leg
+		model = modelTemp; 
+		model = glm::translate(model, glm::vec3(-0.111f, -0.055f, 0.074f));
+		model = glm::rotate(model, glm::radians(FLegs), glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		F_RightLeg.Draw(lightingShader);
+		//Back Left Leg
+		model = modelTemp; 
+		model = glm::translate(model, glm::vec3(0.082f, -0.046, -0.218)); 
+		model = glm::rotate(model, glm::radians(RLegs), glm::vec3(1.0f, 0.0f, 0.0f)); 
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model)); 
+		B_LeftLeg.Draw(lightingShader);
+		//Back Right Leg
+		model = modelTemp; 
+		model = glm::translate(model, glm::vec3(-0.083f, -0.057f, -0.231f));
+		model = glm::rotate(model, glm::radians(RLegs), glm::vec3(-1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		B_RightLeg.Draw(lightingShader); 
 
 
 		model = glm::mat4(1);
-		glEnable(GL_BLEND); // Activa canal alfa
+		glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "transparency"), 1);
-		float angleRad = glm::radians(rotBall);
-		float radius = 2.0f; // Radio del giro (ajusta este valor)
-		float baseY = 0.4f; // Altura base del giro (ajusta este valor)
-		float amplitudeY = 0.5f; // Amplitud del "salto" (ajusta este valor)
-
-		// 2. Cálculo de la posición X, Y, Z
-		float xPos = radius * cos(angleRad); // Posición X
-		float zPos = radius * sin(angleRad); // Posición Z (movimiento circular)
-		float frequency = 0.5f; // Dos saltos por vuelta
-		float yPos = baseY + sin(angleRad * frequency) * amplitudeY; // Posición Y (salto)
-		model = glm::translate(model, glm::vec3(xPos, yPos, zPos));
-
-		// Aplicar Rotación
 		model = glm::rotate(model, glm::radians(rotBall), glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		Ball.Draw(lightingShader);
-		glDisable(GL_BLEND); // Desactiva canal alfa
+	    Ball.Draw(lightingShader); 
+		glDisable(GL_BLEND);  //Desactiva el canal alfa 
 		glBindVertexArray(0);
 	
 
@@ -487,7 +492,7 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		active = !active;
 		if (active)
 		{
-			Light1 = glm::vec3(1.0f, 1.0f, 0.0f);
+			Light1 = glm::vec3(0.2f, 0.8f, 1.0f);
 			
 		}
 		else
@@ -500,26 +505,174 @@ void KeyCallback(GLFWwindow *window, int key, int scancode, int action, int mode
 		AnimBall = !AnimBall;
 		
 	}
+
+
+	if (keys[GLFW_KEY_B])
+	{
+		dogAnim = 1;
+
+	}
+	
 }
 
 void Animation() {
 	if (AnimBall)
-	{
+		rotBall += 0.4f;
 
-		rotBall += 150.0f * deltaTime;
-		if (rotBall > 360.0f) {
-			rotBall -= 360.0f;
+	// --- Movimiento de patas, cabeza y cola (doble velocidad) ---
+	if (dogAnim >= 1 && dogAnim <= 9) {
+		if (!step) {
+			RLegs += 0.6f;
+			FLegs += 0.6f;
+			head += 0.6f;
+			tail += 0.6f;
+			if (RLegs > 15.0f) step = true;
 		}
-
-
-
+		else {
+			RLegs -= 0.6f;
+			FLegs -= 0.6f;
+			head -= 0.6f;
+			tail -= 0.6f;
+			if (RLegs < -15.0f) step = false;
+		}
 	}
-	else
-	{
 
-		rotBall = 0.0f;
+	// --- Máquina de estados del perro ---
+	switch (dogAnim) {
+
+		// 1️ Avanza hacia adelante (frente del modelo = -Z)
+	case 1:
+		dogPos.z += 0.002f;
+		if (dogPos.z >= 2.0f) {
+			dogAnim = 2;
+			targetRot = dogRot - 90.0f; // primer giro a la derecha
+		}
+		break;
+
+		// 2️ Giro a la derecha (para caminar hacia -X)
+	case 2: {
+		dogRot = fmod(dogRot + 360.0f, 360.0f);
+		targetRot = fmod(targetRot + 360.0f, 360.0f);
+		float diff = targetRot - dogRot;
+		if (diff > 180.0f) diff -= 360.0f;
+		if (diff < -180.0f) diff += 360.0f;
+
+		if (fabs(diff) > 1.0f)
+			dogRot += (diff > 0 ? 3.0f : -3.0f);
+		else {
+			dogRot = targetRot;
+			dogAnim = 3;
+		}
+		break;
+	}
+
+		  // 3️ Avanza hacia la izquierda (X-)
+	case 3:
+		dogPos.x -= 0.002f;
+		if (dogPos.x <= -2.0f) {
+			dogAnim = 4;
+			targetRot = dogRot - 90.0f; // segundo giro a la derecha
+		}
+		break;
+
+		// 4️ Segundo giro a la derecha (para avanzar en +Z)
+	case 4: {
+		dogRot = fmod(dogRot + 360.0f, 360.0f);
+		targetRot = fmod(targetRot + 360.0f, 360.0f);
+		float diff = targetRot - dogRot;
+		if (diff > 180.0f) diff -= 360.0f;
+		if (diff < -180.0f) diff += 360.0f;
+
+		if (fabs(diff) > 1.0f)
+			dogRot += (diff > 0 ? 3.0f : -3.0f);
+		else {
+			dogRot = targetRot;
+			dogAnim = 5;
+		}
+		break;
+	}
+
+		  // 5️ Avanza hacia adelante (+Z)
+	case 5:
+		dogPos.z -= 0.002f;
+		if (dogPos.z <= -2.2f) {
+			dogAnim = 6;
+			targetRot = dogRot - 90.0f; // tercer giro a la derecha
+		}
+		break;
+
+		// 6️ Tercer giro a la derecha (para regresar hacia el centro)
+	case 6: {
+		dogRot = fmod(dogRot + 360.0f, 360.0f);
+		targetRot = fmod(targetRot + 360.0f, 360.0f);
+		float diff = targetRot - dogRot;
+		if (diff > 180.0f) diff -= 360.0f;
+		if (diff < -180.0f) diff += 360.0f;
+
+		if (fabs(diff) > 1.0f)
+			dogRot += (diff > 0 ? 3.0f : -3.0f);
+		else {
+			dogRot = targetRot;
+			dogAnim = 7;
+		}
+		break;
+	}
+
+		  // 7️ Avanza hacia el centro (X+ hasta 0)
+	case 7:
+		dogPos.x += 0.002f;
+		if (dogPos.x >= 0.0f) {
+			dogPos.x = 0.0f;
+			dogAnim = 8;              // 🔹 cuarto giro a la derecha
+			targetRot = dogRot - 90.0f;
+		}
+		break;
+
+		// 8️ Cuarto giro a la derecha (para volver hacia Z = 0)
+	case 8: {
+		dogRot = fmod(dogRot + 360.0f, 360.0f);
+		targetRot = fmod(targetRot + 360.0f, 360.0f);
+		float diff = targetRot - dogRot;
+		if (diff > 180.0f) diff -= 360.0f;
+		if (diff < -180.0f) diff += 360.0f;
+
+		if (fabs(diff) > 1.0f)
+			dogRot += (diff > 0 ? 3.0f : -3.0f);
+		else {
+			dogRot = targetRot;
+			dogAnim = 9; // avanza hacia Z = 0
+		}
+		break;
+	}
+
+		  // 9️ Avanza hacia adelante hasta Z = 0
+	case 9:
+		dogPos.z += 0.002f;
+		if (dogPos.z >= 0.0f) { // vuelve al punto inicial
+			dogPos.z = 0.0f;
+			dogAnim = 0; // se detiene
+		}
+		break;
+
+	default:
+		break;
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+
 
 void MouseCallback(GLFWwindow *window, double xPos, double yPos)
 {
