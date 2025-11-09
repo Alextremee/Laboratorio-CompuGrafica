@@ -1,4 +1,4 @@
-//Previo 12. Animacion por KeyFrames.
+//SKYBOX
 //Martínez Jiménez Alejandro
 //319130865
 //Fecha de entrega: 9 de Noviembre de 2025
@@ -28,6 +28,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Model.h"
+#include "Texture.h"
 
 
 // Function prototypes
@@ -135,17 +136,25 @@ typedef struct _frame {
 	float incX;
 	float incY;
 	float incZ;
+
+
 	float head;
 	float headInc;
-	//Todas las demás partes del perro
+
+
 	float cola;
 	float colaInc;
-	float FLegL;
-	float FLegLInc;
+
 	float FLegR;
 	float FLegRInc;
+
+
 	float RLegL;
 	float RLegLInc;
+
+	float FLegL;
+	float FLegLInc;
+
 	float RLegR;
 	float RLegRInc;
 
@@ -165,13 +174,13 @@ void saveFrame(void)
 	KeyFrame[FrameIndex].dogPosX = dogPosX;
 	KeyFrame[FrameIndex].dogPosY = dogPosY;
 	KeyFrame[FrameIndex].dogPosZ = dogPosZ;
+
 	KeyFrame[FrameIndex].head = head;
 	KeyFrame[FrameIndex].cola = cola;
 	KeyFrame[FrameIndex].FLegL = FLegL;
 	KeyFrame[FrameIndex].FLegR = FLegR;
 	KeyFrame[FrameIndex].RLegL = RLegL;
 	KeyFrame[FrameIndex].RLegR = RLegR;
-
 
 	KeyFrame[FrameIndex].rotDog = rotDog;
 
@@ -200,8 +209,10 @@ void interpolation(void)
 	KeyFrame[playIndex].incX = (KeyFrame[playIndex + 1].dogPosX - KeyFrame[playIndex].dogPosX) / i_max_steps;
 	KeyFrame[playIndex].incY = (KeyFrame[playIndex + 1].dogPosY - KeyFrame[playIndex].dogPosY) / i_max_steps;
 	KeyFrame[playIndex].incZ = (KeyFrame[playIndex + 1].dogPosZ - KeyFrame[playIndex].dogPosZ) / i_max_steps;
+
 	KeyFrame[playIndex].headInc = (KeyFrame[playIndex + 1].head - KeyFrame[playIndex].head) / i_max_steps;
 	KeyFrame[playIndex].colaInc = (KeyFrame[playIndex + 1].cola - KeyFrame[playIndex].cola) / i_max_steps;
+
 	KeyFrame[playIndex].FLegLInc = (KeyFrame[playIndex + 1].FLegL - KeyFrame[playIndex].FLegL) / i_max_steps;
 	KeyFrame[playIndex].FLegRInc = (KeyFrame[playIndex + 1].FLegR - KeyFrame[playIndex].FLegR) / i_max_steps;
 	KeyFrame[playIndex].RLegLInc = (KeyFrame[playIndex + 1].RLegL - KeyFrame[playIndex].RLegL) / i_max_steps;
@@ -229,7 +240,7 @@ int main()
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Previo 12. Alejandro Martinez Jimenez", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "SKYBOX. Alejandro Martinez Jimenez", nullptr, nullptr);
 
 	if (nullptr == window)
 	{
@@ -266,7 +277,7 @@ int main()
 
 	Shader lightingShader("Shader/lighting.vs", "Shader/lighting.frag");
 	Shader lampShader("Shader/lamp.vs", "Shader/lamp.frag");
-
+	Shader skyboxshader("Shader/Skybox.vs", "Shader/Skybox.frag");
 
 	//models
 	Model DogBody((char*)"Models/DogBody.obj");
@@ -305,16 +316,82 @@ int main()
 		KeyFrame[i].RLegRInc = 0;
 	}
 
+	GLfloat skyboxVertices[] = {
+		// Positions
+		-1.0f,  1.0f, -1.0f,
+		-1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f, -1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+
+		-1.0f, -1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f, -1.0f,  1.0f,
+		-1.0f, -1.0f,  1.0f,
+
+		-1.0f,  1.0f, -1.0f,
+		1.0f,  1.0f, -1.0f,
+		1.0f,  1.0f,  1.0f,
+		1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f,  1.0f,
+		-1.0f,  1.0f, -1.0f,
+
+		-1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		1.0f, -1.0f, -1.0f,
+		1.0f, -1.0f, -1.0f,
+		-1.0f, -1.0f,  1.0f,
+		1.0f, -1.0f,  1.0f
+	};
+
+
+	GLuint indices[] =
+	{  // Note that we start from 0!
+		0,1,2,3,
+		4,5,6,7,
+		8,9,10,11,
+		12,13,14,15,
+		16,17,18,19,
+		20,21,22,23,
+		24,25,26,27,
+		28,29,30,31,
+		32,33,34,35
+	};
+
+
 
 	// First, set the container's VAO (and VBO)
 	GLuint VBO, VAO, EBO;
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
 
 
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+
 
 
 	// Position attribute
@@ -328,6 +405,32 @@ int main()
 	lightingShader.Use();
 	glUniform1i(glGetUniformLocation(lightingShader.Program, "Material.difuse"), 0);
 	glUniform1i(glGetUniformLocation(lightingShader.Program, "Material.specular"), 1);
+
+
+	//Skubox 
+
+	GLuint skyboxVBO, skyboxVAO;
+	glGenVertexArrays(1, &skyboxVAO);
+	glGenBuffers(1, &skyboxVBO);
+	glBindVertexArray(skyboxVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+
+
+	//Load Textures
+
+	vector < const GLchar*> faces;
+	faces.push_back("Skybox/right.jpg");
+	faces.push_back("Skybox/left.jpg");
+	faces.push_back("Skybox/top.jpg");
+	faces.push_back("Skybox/bottom.jpg");
+	faces.push_back("Skybox/back.jpg");
+	faces.push_back("Skybox/front.jpg");
+
+	GLuint cubemapTexture = TextureLoading::LoadCubemap(faces);
+
 
 
 	glm::mat4 projection = glm::perspective(camera.GetZoom(), (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1f, 100.0f);
@@ -515,11 +618,32 @@ int main()
 		glBindVertexArray(0);
 
 
+
+		//Draw Skybox
+		glDepthFunc(GL_LEQUAL);
+		skyboxshader.Use();
+		view = glm::mat4(glm::mat3(camera.GetViewMatrix()));
+		glUniformMatrix4fv(glGetUniformLocation(skyboxshader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(glGetUniformLocation(skyboxshader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+	
+
+		glBindVertexArray(skyboxVAO);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+		glDepthFunc(GL_LESS);
+
+
 		// Swap the screen buffers
 		glfwSwapBuffers(window);
 	}
 
-
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteVertexArrays(1, &VBO);
+	glDeleteVertexArrays(1, &EBO);
+	glDeleteVertexArrays(1, &skyboxVAO);
+	glDeleteBuffers(1, &skyboxVAO);
 
 
 	// Terminate GLFW, clearing any resources allocated by GLFW.
